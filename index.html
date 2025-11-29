@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VolleyOps | Volleyball Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font: Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* ===============================
+       VOLLEYOPS THEME (FROM YOUR R PLOT)
+       =============================== */
+    :root {
+      --bg-main: #0E0E0E;
+      --bg-card: #0E0E0E;
+      --attack: #3A86FF;
+      --block:  #4CC9F0;
+      --serve:  #72EFDD;
+      --highlight: #5BC0EB;
+      --text-main: #ffffff;
+      --text-sub: #CCCCCC;
+      --text-muted: #AAAAAA;
+      --grid-strong: gray40;
+      --grid-soft: gray30;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 1px dashed var(--grid-strong);
+    }
+
+    header h1 {
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--attack);
+    }
+
+    header p {
+      color: var(--text-sub);
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    nav {
+      margin-top: 20px;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: var(--serve);
+    }
+
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 70px 20px;
+      border-bottom: 1px dashed var(--grid-soft);
+    }
+
+    h2 {
+      color: var(--highlight);
+      font-size: 32px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      padding: 35px;
+      border-radius: 18px;
+    }
+
+    /* ===============================
+       SLIDER (HOMEPAGE)
+       =============================== */
+    .slider {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      height: auto;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px dashed var(--grid-soft);
+      background: #000;
+      position: relative;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.8s ease-in-out;
+    }
+
+    .slides img {
+      min-width: 100%;
+      height: auto;
+      object-fit: contain;
+      background: #000;
+    }
+
+    /* ===============================
+       PROJECT GRID
+       =============================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .project-card {
+      border: 1px dashed var(--grid-soft);
+      padding: 22px;
+      border-radius: 14px;
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+      color: var(--attack);
+    }
+
+    .project-card p {
+      color: var(--text-sub);
+      font-size: 14px;
+    }
+
+    /* ===============================
+       CONTACT FORM
+       =============================== */
+    .contact input, .contact textarea {
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      background: #000;
+      border: 1px dashed var(--grid-soft);
+      color: white;
+      border-radius: 10px;
+    }
+
+    .contact button {
+      background: var(--attack);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .contact button:hover {
+      background: var(--serve);
+      color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* DOT + ARROWS */
+    .dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--grid-soft);
+      border-radius: 50%;
+      margin: 0 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .dot.active {
+      background: var(--attack);
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      font-size: 28px;
+      padding: 8px 14px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+
+    /* ===============================
+       ABOUT ME MOBILE FRIENDLY
+       =============================== */
+    @media (max-width: 768px) {
+      #about .card {
+        display: flex !important;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        padding: 20px !important;
+      }
+
+      #about .card img {
+        max-width: 180px;
+        width: 100%;
+        height: auto;
+      }
+
+      #about .card h2 {
+        font-size: 24px;
+      }
+
+      #about .card p {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= HOME ================= -->
+  <header>
+    <h1>VolleyOps</h1>
+    <p>Volleyball Analytics & Data Visualization</p>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section>
+    <div class="slider">
+      <div class="slides" id="slides">
+        <img src="images/plot2.png">
+        <img src="images/plot3.png">
+        <img src="images/plot4.png">
+        <img src="images/plot5.png">
+        <img src="images/plot1.png">
+        <img src="images/plot6.png">
+      </div>
+
+      <!-- ARROWS -->
+      <button class="arrow left" onclick="prevSlide()">❮</button>
+      <button class="arrow right" onclick="nextSlide()">❯</button>
+
+      <!-- DOT INDICATORS -->
+      <div class="dots" id="dots"></div>
+    </div>
+
+<script>
+  const slides = document.getElementById("slides");
+  const dotsContainer = document.getElementById("dots");
+  const totalSlides = slides.children.length;
+  let index = 0;
+
+  // Create dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    dot.addEventListener("click", () => moveToSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  const dots = document.querySelectorAll(".dot");
+  dots[0].classList.add("active");
+
+  function moveToSlide(i) {
+    index = i;
+    slides.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach(dot => dot.classList.remove("active"));
+    dots[index].classList.add("active");
+  }
+
+  function nextSlide() {
+    index = (index + 1) % totalSlides;
+    moveToSlide(index);
+  }
+
+  function prevSlide() {
+    index = (index - 1 + totalSlides) % totalSlides;
+    moveToSlide(index);
+  }
+
+  setInterval(nextSlide, 7000);
+</script>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section id="about">
+    <div class="card" style="display: grid; grid-template-columns: 220px 1fr; gap: 30px; align-items: center;">
+      <img src="images/mypicture.png" 
+           alt="Ashutosh Mishra" 
+           style="width: 100%; border-radius: 16px; border: 1px dashed var(--grid-soft);">
+
+      <div>
+        <h2>About Me</h2>
+        <p>
+          Hi, I’m <strong>Ashutosh Mishra</strong>, a performance analyst for the Indian National Volleyball Team. I have previously worked with the Netherlands U-18 and U-20 national teams, as well as multiple clubs in the Eredivisie (the highest men’s league in the Netherlands).
+          <br><br>
+          My academic background is in Physics (MSc) and Neuroscience (PhD), and I have professional experience across research, medical imaging, and financial crime analytics. However, my true passion lies at the intersection of volleyball and data analytics.
+          <br><br>
+          Through <strong>@volleyops</strong>, I develop modern analysis methods, advanced statistical techniques, and high-quality visualizations to support athletes, coaches, and performance staff.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects">
+    <h2>Projects & Work</h2>
+    <div class="projects-grid">
+
+      <div class="card">
+        <h3>Time-Series Analysis and Machine Learning Methods</h3>
+        <p>
+          Tracks <strong>temporal evolution</strong> of teams and players across entire seasons. Machine learning methods like clustering help understand relative strengths and competitive positioning within the league.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Performance Dashboards</h3>
+        <p>
+          Interactive dashboards provide a clear overview of both <strong>team and individual performance</strong>, enabling real-time tracking and deep analysis.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Instagram Analytics Series</h3>
+        <p>
+          Educational volleyball data content published through <strong>@volleyops</strong>, translating advanced analytics into <strong>intuitive visual stories</strong> for athletes, coaches, and fans.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <h2>Contact Me</h2>
+
+<div class="card" style="max-width: 600px; margin: auto; padding: 30px; display: flex; flex-direction: column; gap: 20px; background-color: #1a1a1a; border-radius: 16px;">
+  <p style="font-size: 18px; color: #fff;">
+    I’m always up for a discussion about your volleyball analytics needs — or just brainstorming new ideas 🙂
+  </p>
+
+  <form action="https://formspree.io/f/mwpdzypk" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+    <input type="text" name="name" placeholder="Your Name" required 
+           style="padding: 12px; border-radius: 8px; border: 1px solid #444; background-color: #222; color: #fff; font-size: 16px;">
+    <input type="email" name="email" placeholder="Your Email" required
+           style="padding: 12px; border-radius: 8px; border: 1px solid #444; background-color: #222; color: #fff; font-size: 16px;">
+    <textarea name="message" rows="5" placeholder="Your Message" required
+           style="padding: 12px; border-radius: 8px; border: 1px solid #444; background-color: #222; color: #fff; font-size: 16px;"></textarea>
+    <button type="submit" style="padding: 12px; border-radius: 8px; border: none; background-color: #3A86FF; color: #fff; font-size: 16px; cursor: pointer; transition: background 0.3s;">Send Message</button>
+  </form>
+
+  <div style="display: flex; justify-content: center; gap: 25px; margin-top: 20px;">
+    <a href="mailto:mishra408@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="font-size: 26px; color: #fff;"></i></a>
+    <a href="https://www.linkedin.com/in/mishrashudr/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin" style="font-size: 26px; color: #0A66C2;"></i></a>
+    <a href="https://www.instagram.com/volleyops/" target="_blank" title="Instagram"><i class="fab fa-instagram" style="font-size: 26px; color: #E1306C;"></i></a>
+  </div>
+</div>
+
+  </section>
+
+  <footer>
+    © 2025 VolleyOps | @volleyops
+  </footer>
+
+</body>
+</html>
